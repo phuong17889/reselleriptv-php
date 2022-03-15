@@ -20,7 +20,7 @@ abstract class Model implements ObjectInterface
 
     /**
      * @param $attributes
-     * @return void
+     * @return $this
      */
     public function setAttributes($attributes)
     {
@@ -29,6 +29,7 @@ abstract class Model implements ObjectInterface
                 $this->$attribute = $value;
             }
         }
+        return $this;
     }
 
     /**

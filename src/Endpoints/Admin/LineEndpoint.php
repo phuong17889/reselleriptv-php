@@ -29,7 +29,8 @@ class LineEndpoint extends Endpoint
     {
         $adapter = $this->adapter->get('line/list', ['page_size' => $page_size, 'page_number' => $page_number, 'sort' => $sort, 'order' => $order]);
         $this->body = json_decode($adapter->getBody());
-        $this->setPage($this->body->result);
-        return $this->setData(Line::class, $this->body->result);
+        $result = $this->body->result;
+        $this->setPage($result);
+        return $this->setData(Line::class, $result);
     }
 }

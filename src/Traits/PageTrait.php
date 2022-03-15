@@ -6,6 +6,7 @@
  * @email   phuong17889[at]gmail.com
  * @date    3/15/2022
  * @time    4:03 PM
+ * @version 1.0.0
  */
 
 namespace ResellerIPTV\Traits;
@@ -14,9 +15,28 @@ use stdClass;
 
 trait PageTrait
 {
+    /**
+     * Page size of result
+     * @var int
+     */
     public $page_size;
+
+    /**
+     * Current page number of result
+     * @var int
+     */
     public $page_number;
+
+    /**
+     * Total pages of result
+     * @var int
+     */
     public $total_page;
+
+    /**
+     * Total items of result
+     * @var int
+     */
     public $total_items;
 
     /**
@@ -62,5 +82,41 @@ trait PageTrait
             }
         }
         return $models;
+    }
+
+    /**
+     * Page size of result
+     * @return int
+     */
+    public function getPageSize()
+    {
+        return $this->page_size;
+    }
+
+    /**
+     * Current page number of result
+     * @return int
+     */
+    public function getPageNumber()
+    {
+        return $this->page_number;
+    }
+
+    /**
+     * Total pages of result
+     * @return int
+     */
+    public function getTotalPage()
+    {
+        return $this->total_page;
+    }
+
+    /**
+     * Total items of result
+     * @return int
+     */
+    public function getTotalItems()
+    {
+        return $this->total_items;
     }
 }

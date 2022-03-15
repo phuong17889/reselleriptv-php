@@ -6,6 +6,7 @@
  * @email   phuong17889[at]gmail.com
  * @date    3/15/2022
  * @time    11:00 AM
+ * @version 1.0.0
  */
 
 namespace ResellerIPTV\Interfaces;
@@ -28,7 +29,8 @@ interface AdapterInterface
     public function get($uri, array $data = [], array $headers = []);
 
     /**
-     * @param $uri
+     * Sends a POST request.
+     * @param string $uri
      * @param array $data
      * @param array $headers
      *
@@ -37,7 +39,8 @@ interface AdapterInterface
     public function post($uri, array $data = [], array $headers = []);
 
     /**
-     * @param $uri
+     * Sends a PUT request.
+     * @param string $uri
      * @param array $data
      * @param array $headers
      *
@@ -46,7 +49,8 @@ interface AdapterInterface
     public function put($uri, array $data = [], array $headers = []);
 
     /**
-     * @param $uri
+     * Sends a PATCH request.
+     * @param string $uri
      * @param array $data
      * @param array $headers
      *
@@ -55,6 +59,7 @@ interface AdapterInterface
     public function patch($uri, array $data = [], array $headers = []);
 
     /**
+     * Sends a DELETE request.
      * @param string $uri
      * @param array $data
      * @param array $headers
