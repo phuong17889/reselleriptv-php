@@ -8,12 +8,12 @@
  * @time    3:17 PM
  */
 
-namespace ResellerIPTV\Endpoints;
+namespace ResellerIPTV\Abstracts;
 
 use ResellerIPTV\Interfaces\AdapterInterface;
 use ResellerIPTV\Interfaces\EndpointInterface;
 
-class Endpoint implements EndpointInterface
+abstract class Endpoint implements EndpointInterface
 {
 
     protected $adapter;
