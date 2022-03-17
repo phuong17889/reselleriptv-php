@@ -18,7 +18,7 @@ class ChannelEndpoint extends Endpoint
     /**
      * @return array
      */
-    public function getList($name = null)
+    public function list($name = null)
     {
         $channels = [];
         $adapter = $this->adapter->get('channel/list', ['name' => $name]);

@@ -85,6 +85,21 @@ trait PageTrait
     }
 
     /**
+     * @param string $object
+     * @param stdClass $result
+     * @return array
+     */
+    public function setObject($object, $result)
+    {
+        if (is_object($result)) {
+            $result = json_decode(json_encode($result), true);
+        }
+        $model = new $object();
+        $model->setAttributes($result);
+        return $model;
+    }
+
+    /**
      * Page size of result
      * @return int
      */

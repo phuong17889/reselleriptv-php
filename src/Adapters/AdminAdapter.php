@@ -8,8 +8,10 @@
 namespace ResellerIPTV\Adapters;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
+use ResellerIPTV\Exceptions\EndpointException;
 use ResellerIPTV\Exceptions\JsonException;
 use ResellerIPTV\Exceptions\ResponseException;
 use ResellerIPTV\Interfaces\AdapterInterface;
@@ -109,6 +111,7 @@ class AdminAdapter implements AdapterInterface
      * @param array $data
      * @param array $headers
      * @return mixed
+     * @throws EndpointException
      * @throws JsonException
      * @throws ResponseException
      */
@@ -117,11 +120,16 @@ class AdminAdapter implements AdapterInterface
         if (!in_array($method, ['get', 'post', 'put', 'patch', 'delete'])) {
             throw new InvalidArgumentException('Request method must be get, post, put, patch, or delete');
         }
+        try {
 
-        $response = $this->client->$method($uri, [
-            'headers' => $headers,
-            ($method === 'get' ? 'query' : 'json') => $data,
-        ]);
+            $response = $this->client->$method($uri, [
+                'headers' => $headers,
+                ($method === 'get' ? 'query' : 'form_params') => $data,
+            ]);
+        } catch (ClientException $e) {
+            $content = $e->getResponse()->getBody()->getContents();
+            throw new EndpointException($content);
+        }
 
         $this->checkError($response);
 

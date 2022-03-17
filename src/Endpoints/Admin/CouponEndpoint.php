@@ -4,17 +4,17 @@
  * @project reselleriptv-php
  * @author  Le Phuong
  * @email   phuong17889[at]gmail.com
- * @date    3/15/2022
- * @time    3:53 PM
+ * @date    3/16/2022
+ * @time    5:13 PM
  */
 
 namespace ResellerIPTV\Endpoints\Admin;
 
 use ResellerIPTV\Abstracts\Endpoint;
-use ResellerIPTV\Models\Admin\Line;
+use ResellerIPTV\Models\Admin\Coupon;
 use ResellerIPTV\Traits\PageTrait;
 
-class LineEndpoint extends Endpoint
+class CouponEndpoint extends Endpoint
 {
     use PageTrait;
 
@@ -25,14 +25,15 @@ class LineEndpoint extends Endpoint
      * @param $order
      * @return array
      */
-    public function list($page_size = 20, $page_number = 1, $sort = 'created_at', $order = SORT_ASC)
+    public function getList($page_size = 20, $page_number = 1, $sort = 'created_at', $order = SORT_ASC)
     {
-        $adapter = $this->adapter->get('line/list', ['page_size' => $page_size, 'page_number' => $page_number, 'sort' => $sort, 'order' => $order]);
+        $adapter = $this->adapter->get('coupon/list', ['page_size' => $page_size, 'page_number' => $page_number, 'sort' => $sort, 'order' => $order]);
         $this->body = json_decode($adapter->getBody());
         $result = $this->body->result;
         $this->setPage($result);
-        return $this->setData(Line::class, $result);
+        return $this->setData(Coupon::class, $result);
     }
+
 
     /**
      * @param $id
@@ -41,10 +42,11 @@ class LineEndpoint extends Endpoint
      */
     public function update($id, $attributes)
     {
-        $adapter = $this->adapter->post('line/update?id=' . $id, $attributes);
+        $adapter = $this->adapter->post('coupon/update?id=' . $id, $attributes);
         $this->body = json_decode($adapter->getBody());
         $result = $this->body->result;
-        return $this->setObject(Line::class, $result);
+        return $this->setObject(Coupon::class, $result);
+
     }
 
     /**
@@ -53,7 +55,7 @@ class LineEndpoint extends Endpoint
      */
     public function delete($id)
     {
-        $this->adapter->delete('line/delete?id=' . $id);
+        $this->adapter->delete('coupon/delete?id=' . $id);
         return true;
     }
 
@@ -63,21 +65,9 @@ class LineEndpoint extends Endpoint
      */
     public function create($attributes)
     {
-        $adapter = $this->adapter->post('line/create', $attributes);
+        $adapter = $this->adapter->post('coupon/create', $attributes);
         $this->body = json_decode($adapter->getBody());
         $result = $this->body->result;
-        return $this->setObject(Line::class, $result);
-    }
-
-    /**
-     * @param $id
-     * @return array
-     */
-    public function view($id)
-    {
-        $adapter = $this->adapter->get('line/view?id=' . $id);
-        $this->body = json_decode($adapter->getBody());
-        $result = $this->body->result;
-        return $this->setObject(Line::class, $result);
+        return $this->setObject(Coupon::class, $result);
     }
 }
