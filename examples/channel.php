@@ -12,5 +12,5 @@ $apiKey = new \ResellerIPTV\Authentications\AdminAuth('X9oraqCNNvkgwLS5FgUTMJTN1
 $adapter = new \ResellerIPTV\Adapters\AdminAdapter($apiKey, 'http://api.reselleriptv.demo/v1/admin/');
 $channel = new \ResellerIPTV\Endpoints\Admin\ChannelEndpoint($adapter);
 echo '<pre>';
-print_r($channel->getList('VOD'));
+print_r($channel->list('VOD'));
 die;
