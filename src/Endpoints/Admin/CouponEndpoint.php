@@ -11,6 +11,7 @@
 namespace ResellerIPTV\Endpoints\Admin;
 
 use ResellerIPTV\Abstracts\Endpoint;
+use ResellerIPTV\Abstracts\Model;
 use ResellerIPTV\Models\Admin\Coupon;
 use ResellerIPTV\Traits\PageTrait;
 
@@ -19,15 +20,20 @@ class CouponEndpoint extends Endpoint
     use PageTrait;
 
     /**
+     * @var Model
+     */
+    private $filterModel = null;
+
+    /**
      * @param $page_size
      * @param $page_number
      * @param $sort
      * @param $order
      * @return array
      */
-    public function getList($page_size = 20, $page_number = 1, $sort = 'created_at', $order = SORT_ASC)
+    public function list($page_size = 20, $page_number = 1, $sort = 'created_at', $order = SORT_ASC)
     {
-        $adapter = $this->adapter->get('coupon/list', ['page_size' => $page_size, 'page_number' => $page_number, 'sort' => $sort, 'order' => $order]);
+        $adapter = $this->adapter->get('coupon/list', ['page_size' => $page_size, 'page_number' => $page_number, 'sort' => $sort, 'order' => $order, 'AdminCouponSearch' => $this->filterModel != null ? $this->filterModel->getAttributes() : []]);
         $this->body = json_decode($adapter->getBody());
         $result = $this->body->result;
         $this->setPage($result);
@@ -55,7 +61,7 @@ class CouponEndpoint extends Endpoint
      */
     public function delete($id)
     {
-        $this->adapter->delete('coupon/delete?id=' . $id);
+        $this->adapter->post('coupon/delete?id=' . $id);
         return true;
     }
 
@@ -69,5 +75,13 @@ class CouponEndpoint extends Endpoint
         $this->body = json_decode($adapter->getBody());
         $result = $this->body->result;
         return $this->setObject(Coupon::class, $result);
+    }
+
+    /**
+     * @param null $filterModel
+     */
+    public function setFilterModel($filterModel)
+    {
+        $this->filterModel = $filterModel;
     }
 }

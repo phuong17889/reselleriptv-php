@@ -7,10 +7,15 @@
  * @date    3/14/2022
  * @time    5:23 PM
  */
-require "../vendor/autoload.php";
-$apiKey = new \ResellerIPTV\Authentications\AdminAuth('X9oraqCNNvkgwLS5FgUTMJTN12JVNXza');
-$adapter = new \ResellerIPTV\Adapters\AdminAdapter($apiKey, 'http://api.reselleriptv.demo/v1/admin/');
+include "init.php";
+$apiKey  = new \ResellerIPTV\Authentications\AdminAuth(BASE_API_KEY);
+$adapter = new \ResellerIPTV\Adapters\AdminAdapter($apiKey, BASE_URL);
 $channel = new \ResellerIPTV\Endpoints\Admin\ChannelEndpoint($adapter);
-echo '<pre>';
-print_r($channel->list('VOD'));
-die;
+/**
+ * Get all list of channels
+ * var_dump($channel->list());
+ *
+ * Get all list with filter
+ * var_dump($channel->list('VOD'));
+ */
+var_dump($channel->list('VOD'));

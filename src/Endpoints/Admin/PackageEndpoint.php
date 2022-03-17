@@ -11,12 +11,18 @@
 namespace ResellerIPTV\Endpoints\Admin;
 
 use ResellerIPTV\Abstracts\Endpoint;
+use ResellerIPTV\Abstracts\Model;
 use ResellerIPTV\Models\Admin\Package;
 use ResellerIPTV\Traits\PageTrait;
 
 class PackageEndpoint extends Endpoint
 {
     use PageTrait;
+
+    /**
+     * @var Model
+     */
+    private $filterModel = null;
 
     /**
      * @param $page_size
@@ -27,7 +33,7 @@ class PackageEndpoint extends Endpoint
      */
     public function list($page_size = 20, $page_number = 1, $sort = 'created_at', $order = SORT_ASC)
     {
-        $adapter = $this->adapter->get('package/list', ['page_size' => $page_size, 'page_number' => $page_number, 'sort' => $sort, 'order' => $order]);
+        $adapter = $this->adapter->get('package/list', ['page_size' => $page_size, 'page_number' => $page_number, 'sort' => $sort, 'order' => $order, 'AdminPackageSearch' => $this->filterModel != null ? $this->filterModel->getAttributes() : []]);
         $this->body = json_decode($adapter->getBody());
         $result = $this->body->result;
         $this->setPage($result);
@@ -45,5 +51,13 @@ class PackageEndpoint extends Endpoint
         $this->body = json_decode($adapter->getBody());
         $result = $this->body->result;
         return $this->setObject(Package::class, $result);
+    }
+
+    /**
+     * @param null $filterModel
+     */
+    public function setFilterModel($filterModel)
+    {
+        $this->filterModel = $filterModel;
     }
 }

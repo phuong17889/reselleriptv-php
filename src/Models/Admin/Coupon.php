@@ -25,6 +25,8 @@ use ResellerIPTV\Abstracts\Model;
  */
 class Coupon extends Model
 {
+    const DISCOUNT_TYPE_AMOUNT = 'amount';
+    const DISCOUNT_TYPE_PERCENT = 'percent';
 
     /**
      * @return string[]
@@ -46,7 +48,7 @@ class Coupon extends Model
                     foreach ($value as $package_value) {
                         $package = new Package();
                         $package->setAttributes($package_value);
-                        if ($this->packages != null) {
+                        if (isset($this->packages) && $this->packages != null) {
                             $this->packages[] = $package;
                         } else {
                             $this->packages = [$package];

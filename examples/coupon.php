@@ -7,9 +7,21 @@
  * @date    3/15/2022
  * @time    4:25 PM
  */
-require "../vendor/autoload.php";
-$apiKey = new \ResellerIPTV\Authentications\AdminAuth('X9oraqCNNvkgwLS5FgUTMJTN12JVNXza');
-$adapter = new \ResellerIPTV\Adapters\AdminAdapter($apiKey, 'http://api.reselleriptv.demo/v1/admin/');
-$line = new \ResellerIPTV\Endpoints\Admin\CouponEndpoint($adapter);
-echo '<pre>';
-print_r($line->getList(2));
+require "init.php";
+$apiKey = new \ResellerIPTV\Authentications\AdminAuth(BASE_API_KEY);
+$adapter = new \ResellerIPTV\Adapters\AdminAdapter($apiKey, BASE_URL);
+$coupon = new \ResellerIPTV\Endpoints\Admin\CouponEndpoint($adapter);
+/**
+ * Get all list of coupons
+ * var_dump($coupon->list());
+ *
+ * Get all list with filter
+ * $modelSearch = new \ResellerIPTV\Models\Admin\Coupon();
+ * $modelSearch->discount_type = \ResellerIPTV\Models\Admin\Coupon::DISCOUNT_TYPE_AMOUNT;
+ * $coupon->setFilterModel($modelSearch);
+ * var_dump($coupon->list());
+ *
+ * Get all list with paging
+ */
+var_dump($coupon->list(1));
+

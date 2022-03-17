@@ -8,14 +8,16 @@
 namespace ResellerIPTV\Adapters;
 
 use GuzzleHttp\Client;
+use ResellerIPTV\Abstracts\Adapter;
 use ResellerIPTV\Interfaces\AuthenticationInterface;
 
-class UserAdapter extends AdminAdapter
+class UserAdapter extends Adapter
 {
-    private $client;
 
     /**
-     * @inheritDoc
+     * @param AuthenticationInterface $apiKey
+     * @param AuthenticationInterface|null $userKey
+     * @param $baseURI
      */
     public function __construct(AuthenticationInterface $apiKey, AuthenticationInterface $userKey = null, $baseURI = null)
     {

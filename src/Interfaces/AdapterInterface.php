@@ -37,34 +37,4 @@ interface AdapterInterface
      * @return ResponseInterface
      */
     public function post($uri, array $data = [], array $headers = []);
-
-    /**
-     * Sends a PUT request.
-     * @param string $uri
-     * @param array $data
-     * @param array $headers
-     *
-     * @return ResponseInterface
-     */
-    public function put($uri, array $data = [], array $headers = []);
-
-    /**
-     * Sends a PATCH request.
-     * @param string $uri
-     * @param array $data
-     * @param array $headers
-     *
-     * @return ResponseInterface
-     */
-    public function patch($uri, array $data = [], array $headers = []);
-
-    /**
-     * Sends a DELETE request.
-     * @param string $uri
-     * @param array $data
-     * @param array $headers
-     *
-     * @return ResponseInterface
-     */
-    public function delete($uri, array $data = [], array $headers = []);
 }
